@@ -25,8 +25,8 @@ install:
 	@cp -r src/var/lib/rpimonitor/* ${TARGETDIR}var/lib/rpimonitor/
 	@mkdir -p ${TARGETDIR}etc/rpimonitor
 	@cp -r src/etc/rpimonitor/* ${TARGETDIR}etc/rpimonitor/
-	@mkdir -p ${TARGETDIR}etc/cron.d
-	@cp -r src/etc/cron.d/* ${TARGETDIR}etc/cron.d/
+	@mkdir -p ${TARGETDIR}etc/sudoers.d
+	@cp -r src/etc/sudoers.d/* ${TARGETDIR}etc/sudoers.d/
 	@mkdir -p ${TARGETDIR}usr/bin
 	@cp -r src/usr/bin/* ${TARGETDIR}usr/bin/
 	@mkdir -p ${TARGETDIR}usr/share/rpimonitor

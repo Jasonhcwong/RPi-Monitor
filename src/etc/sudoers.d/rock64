@@ -1,0 +1,2 @@
+Cmnd_Alias SYSTEMCTL_MONEROD = /bin/systemctl start monerod, /bin/systemctl stop monerod, /bin/systemctl restart monerod, /bin/systemctl enable monerod, /bin/systemctl disable monerod, /usr/sbin/service rpimonitor restart, /sbin/shutdown -h now, /sbin/shutdown -r now
+%rock64 ALL=(ALL) NOPASSWD: SYSTEMCTL_MONEROD
