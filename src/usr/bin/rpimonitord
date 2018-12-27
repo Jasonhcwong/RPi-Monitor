@@ -25,7 +25,7 @@ use IPC::ShareLite;
 $|=1;
 $SIG{CHLD}   = 'IGNORE';
 
-my $VERSION  = "{DEVELOPMENT}";
+my $VERSION  = "2.12-r0";
 our $verbose  = 0;
 my $pidfile;
 
@@ -318,6 +318,13 @@ sub new
     "/version.json",
     "/favicon.ico",
 
+    "/startservice",
+    "/stopservice",
+    "/restartservice",
+    "/enableservice",
+    "/disableservice",
+    "/deleteresync",
+
     "/index.html",
     "/addons.html",
     "/statistics.html",
@@ -460,6 +467,20 @@ sub SendError
   return 1;
 }
 
+sub RunCMD
+{
+  local $SIG{CHLD} = 'DEFAULT';
+  my $this = shift;
+  my $cmd = shift;
+
+  system($cmd);
+  my $exit_code = $? >> 8;
+  my $resp = "{\"cmd\": \"${cmd}\", \"return_code\": \"${exit_code}\", \"message\": \"$!\"}";
+
+  $this->SendJSON($resp);
+  return 1;
+}
+
 sub DoGET
 {
   my $this = shift;
@@ -503,6 +524,15 @@ sub DoGET
   $path =~ /shellinabox$/   and $this->ShowShellinabox( $configuration, $request->header('Host') ) and return;
   $path =~ /dynamic\.json/  and $this->SendStatus( $configuration ) and return;
   $path =~ /([^\/]+)\.json/ and $this->SendJSON($this->{$1}) and return;
+
+  $path =~ /startservice$/   and $this->RunCMD("sudo systemctl start monerod") and return;
+  $path =~ /stopservice$/    and $this->RunCMD("sudo systemctl stop monerod") and return;
+  $path =~ /restartservice$/ and $this->RunCMD("sudo systemctl restart monerod") and return;
+  $path =~ /enableservice$/  and $this->RunCMD("sudo systemctl enable monerod") and return;
+  $path =~ /disableservice$/ and $this->RunCMD("sudo systemctl disable monerod") and return;
+  $path =~ /deleteresync$/   and $this->RunCMD("sudo systemctl stop monerod && rm -rf /mnt/data/monero/lmdb/* && sudo systemctl start monerod") and return;
+  $path =~ /shutdown$/       and $this->RunCMD("sudo shutdown -h now") and return;
+  $path =~ /reboot$/         and $this->RunCMD("sudo shutdown -r now") and return;
 
   #Recreate empty rrd on demand
   $path =~ /empty\.rrd/ and $configuration->CreateRRD( "$configuration->{'daemon'}->{'datastore'}/stat/empty.rrd", 'empty', 'GAUGE', 'U', 'U' );
