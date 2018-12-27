@@ -1,0 +1,25 @@
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">monero daemon administration</h3>
+  </div>
+  <div class="panel-body">
+    <div><b>Monero daemon status: </b> <div id="monerodActive"></div>  <div id="monerodEnabled"></div> </div> <br>
+    <button type="button" onclick="startService()" id="startButton"><b>Start service</b></button> To start monero daemon<br><br>
+    <button type="button" onclick="stopService()" id="stopButton"><b>Stop service</b></button> To stop monero daemon<br><br>
+    <button type="button" onclick="restartService()" id="restartButton"><b>Restart service</b></button> To restart monero daemon<br><br>
+    <button type="button" onclick="enableService()" id="enableButton"><b>Enable service</b></button> To enable starting monero daemon at boot<br><br>
+    <button type="button" onclick="disableService()" id="disableButton"><b>Disable service</b></button> To disable starting monero daemon at boot<br><br>
+    <button type="button" onclick="deleteResync()" id="deleteResyncButton"><b><font color="red">Delete blockchain and restart syncing</font></b></button> This may take up to 24 hours to sync the blockchain<br><br>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">monerobox administration</h3>
+  </div>
+  <div class="panel-body">
+    <button type="button" onclick="shutdown()" id="shutdownButton"><b><font color="red">Shutdown</font></b></button> <br><br>
+    <button type="button" onclick="reboot()" id="rebootButton"><b><font color="red">Reboot</font></b></button> <br><br>
+  </div>
+</div>
+<br>
