@@ -123,6 +123,7 @@ $(function () {
   // Load data from local storage
   animate=(localStorage.getItem('animate') === 'true');
   statusautorefresh=(localStorage.getItem('statusautorefresh') === 'true');
+  statusautorefresh = 'true';
 
   /* Show friends */
   ShowFriends();
