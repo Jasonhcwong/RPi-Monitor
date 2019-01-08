@@ -1,3 +1,9 @@
+This repo is for the web UI of [monerobox project](https://github.com/Jasonhcwong/monerobox/).  
+The web UI is based on RPi-Monitor.  
+  
+======================================== Original README ======================================== 
+
+
 # [**RPi-Monitor**](http://rpi-experiences.blogspot.fr/) 
 
 ### Overview
