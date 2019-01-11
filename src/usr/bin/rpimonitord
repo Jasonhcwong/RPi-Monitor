@@ -530,7 +530,7 @@ sub DoGET
   $path =~ /restartservice$/ and $this->RunCMD("sudo systemctl restart monerod") and return;
   $path =~ /enableservice$/  and $this->RunCMD("sudo systemctl enable monerod") and return;
   $path =~ /disableservice$/ and $this->RunCMD("sudo systemctl disable monerod") and return;
-  $path =~ /deleteresync$/   and $this->RunCMD("sudo systemctl stop monerod && rm -rf /mnt/data/monero/lmdb/* && sudo systemctl start monerod") and return;
+  $path =~ /deleteresync$/   and $this->RunCMD("sudo systemctl stop monerod && rm -rf /data/monero/lmdb/* && sudo systemctl start monerod") and return;
   $path =~ /shutdown$/       and $this->RunCMD("sudo shutdown -h now") and return;
   $path =~ /reboot$/         and $this->RunCMD("sudo shutdown -r now") and return;
 
