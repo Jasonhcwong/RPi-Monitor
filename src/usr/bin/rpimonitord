@@ -1401,7 +1401,7 @@ $pidfile and &daemonize($configuration);
 my $monitor = Monitor->new();
 # Process data that should be extracted once, before the server starts
 $monitor->Process($configuration,'static');
-$monitor->{'static'}->{'hostname'} = hostname();
+$monitor->{'static'}->{'hostname'} = $ENV{'HOST_HOSTNAME'};;
 
 $SIG{INT}    = sub { stop(); }; # catch Ctrl+C
 
