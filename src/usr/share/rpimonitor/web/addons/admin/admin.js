@@ -5,8 +5,6 @@ function disableAllButtons() {
   $("#startButton").prop('disabled',true);;
   $("#stopButton").prop('disabled',true);;
   $("#restartButton").prop('disabled',true);;
-  $("#enableButton").prop('disabled',true);;
-  $("#disableButton").prop('disabled',true);;
   $("#deleteResyncButton").prop('disabled',true);;
   $("#shutdownButton").prop('disabled',true);;
   $("#rebootButton").prop('disabled',true);;
@@ -58,42 +56,6 @@ function restartService() {
   })
   .fail(function() {
     alert('Failed to restart service.');
-  })
-  .always(function() {
-    location.reload(true);
-  });
-}
-
-function enableService() {
-  disableAllButtons();
-  $.getJSON('enableservice', function(data) {
-    if (data.return_code === '0') {
-      alert('Service successfully enabled.\nPlease wait for 10 seconds and click the button below to refresh the page.');
-      location.reload(true);
-    } else {
-      alert('Failed to enable service.');
-    }
-  })
-  .fail(function() {
-    alert('Failed to enable service.');
-  })
-  .always(function() {
-    location.reload(true);
-  });
-}
-
-function disableService() {
-  disableAllButtons();
-  $.getJSON('disableservice', function(data) {
-    if (data.return_code === '0') {
-      alert('Service successfully disabled.\nPlease wait for 10 seconds and click the button below to refresh the page.');
-      location.reload(true);
-    } else {
-      alert('Failed to disable service.');
-    }
-  })
-  .fail(function() {
-    alert('Failed to disable service.');
   })
   .always(function() {
     location.reload(true);
@@ -166,9 +128,7 @@ $(function () {
     // Concatenate dynamic.json and static.json into data variable
     $.extend(data, getData('static'));
     
-    tmp  = Badge(data.monerodActive, "=='active'", "Running", "success") + Badge(data.monerodActive, "!='active'", "Stopped", "danger");
-    tmp2 = Badge(data.monerodEnabled, "=='enabled'", "Enabled", "success") + Badge(data.monerodEnabled, "!='enabled'", "Disabled", "danger");
+    tmp  = Badge(data.monerodActive, "!=''", "Running", "success") + Badge(data.monerodActive, "==''", "Stopped", "danger");
     $("#monerodActive").html(tmp)
-    $("#monerodEnabled").html(tmp2)
   })
 });
