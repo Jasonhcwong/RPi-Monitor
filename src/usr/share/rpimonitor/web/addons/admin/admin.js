@@ -128,7 +128,7 @@ $(function () {
     // Concatenate dynamic.json and static.json into data variable
     $.extend(data, getData('static'));
     
-    tmp  = Badge(data.monerodActive, "=='3'", "Running", "success") + Badge(data.monerodActive, "!='3'", "Stopped", "danger");
+    tmp  = Badge(data.monerodActive, "!='2'", "Running", "success") + Badge(data.monerodActive, "=='2'", "Stopped", "danger");
     $("#monerodActive").html(tmp)
   })
 });
