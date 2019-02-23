@@ -320,9 +320,6 @@ sub new
 
     "/startservice",
     "/stopservice",
-    "/restartservice",
-    "/enableservice",
-    "/disableservice",
     "/deleteresync",
 
     "/index.html",
@@ -525,14 +522,10 @@ sub DoGET
   $path =~ /dynamic\.json/  and $this->SendStatus( $configuration ) and return;
   $path =~ /([^\/]+)\.json/ and $this->SendJSON($this->{$1}) and return;
 
-  $path =~ /startservice$/   and $this->RunCMD("sudo systemctl start monerod") and return;
-  $path =~ /stopservice$/    and $this->RunCMD("sudo systemctl stop monerod") and return;
-  $path =~ /restartservice$/ and $this->RunCMD("sudo systemctl restart monerod") and return;
-  $path =~ /enableservice$/  and $this->RunCMD("sudo systemctl enable monerod") and return;
-  $path =~ /disableservice$/ and $this->RunCMD("sudo systemctl disable monerod") and return;
-  $path =~ /deleteresync$/   and $this->RunCMD("sudo systemctl stop monerod && rm -rf /data/monero/lmdb/* && sudo systemctl start monerod") and return;
-  $path =~ /shutdown$/       and $this->RunCMD("sudo shutdown -h now") and return;
-  $path =~ /reboot$/         and $this->RunCMD("sudo shutdown -r now") and return;
+  $path =~ /startservice$/   and $this->RunCMD("/usr/src/app/start_monerod.sh") and return;
+  $path =~ /stopservice$/    and $this->RunCMD("/usr/src/app/stop_monerod.sh") and return;
+  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/stop_monerod.sh && rm -rf /data/monero/lmdb/* && /usr/src/app/start_monerod.sh") and return;
+  $path =~ /shutdown$/       and $this->RunCMD("/usr/src/app/stop_monerod.sh && shutdown -h now") and return;
 
   #Recreate empty rrd on demand
   $path =~ /empty\.rrd/ and $configuration->CreateRRD( "$configuration->{'daemon'}->{'datastore'}/stat/empty.rrd", 'empty', 'GAUGE', 'U', 'U' );

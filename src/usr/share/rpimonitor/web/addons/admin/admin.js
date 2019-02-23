@@ -4,10 +4,8 @@ if (activePage == null){ activePage = 0; }
 function disableAllButtons() {
   $("#startButton").prop('disabled',true);;
   $("#stopButton").prop('disabled',true);;
-  $("#restartButton").prop('disabled',true);;
   $("#deleteResyncButton").prop('disabled',true);;
   $("#shutdownButton").prop('disabled',true);;
-  $("#rebootButton").prop('disabled',true);;
 }
 
 function startService() {
@@ -39,23 +37,6 @@ function stopService() {
   })
   .fail(function() {
     alert('Failed to stop service.');
-  })
-  .always(function() {
-    location.reload(true);
-  });
-}
-
-function restartService() {
-  disableAllButtons();
-  $.getJSON('restartservice', function(data) {
-    if (data.return_code === '0') {
-      alert('Service successfully restarted.\nPlease wait for 10 seconds and click the button below to refresh the page.');
-    } else {
-      alert('Failed to restart service.');
-    }
-  })
-  .fail(function() {
-    alert('Failed to restart service.');
   })
   .always(function() {
     location.reload(true);
@@ -95,23 +76,6 @@ function shutdown() {
     })
     .fail(function() {
       alert('monerobox is shutting down, you may get error message from the browser.');
-    });
-  } else {
-    location.reload(true);
-  }
-}
-
-function reboot() {
-  var r = confirm('Are you sure you want to reboot monerbox?');
-  if (r == true) {
-    disableAllButtons();
-    $.getJSON('reboot', function(data) {
-      // server should not return anything
-      alert('Failed to reboot monerobox.');
-      location.reload(true);
-    })
-    .fail(function() {
-      alert('monerobox is rebooting, please wait for 2 minutes and refresh the page.');
     });
   } else {
     location.reload(true);
