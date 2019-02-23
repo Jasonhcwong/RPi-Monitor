@@ -105,8 +105,8 @@ sub Load
   $this->{'daemon'}->{'sharedmemkey'}||= 20130906;
 
   # Check user and group
-  $this->{'daemon'}->{'gid'} = getgrnam($this->{'daemon'}->{'group'})  || 1000;
-  $this->{'daemon'}->{'uid'} = getpwnam($this->{'daemon'}->{'user'}) || 1000;
+  $this->{'daemon'}->{'gid'} = 0;
+  $this->{'daemon'}->{'uid'} = 0;
 
   # Check rrd directory and files and create them if they are missing
   # Create storage directory if needed
@@ -524,8 +524,8 @@ sub DoGET
 
   $path =~ /startservice$/   and $this->RunCMD("/usr/src/app/start_monerod.sh") and return;
   $path =~ /stopservice$/    and $this->RunCMD("/usr/src/app/stop_monerod.sh") and return;
-  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/stop_monerod.sh && rm -rf /data/monero/lmdb/* && /usr/src/app/start_monerod.sh") and return;
-  $path =~ /shutdown$/       and $this->RunCMD("/usr/src/app/stop_monerod.sh && shutdown -h now") and return;
+  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/delete_resync.sh") and return;
+  $path =~ /shutdown$/       and $this->RunCMD("/usr/src/app/shutdown.sh") and return;
 
   #Recreate empty rrd on demand
   $path =~ /empty\.rrd/ and $configuration->CreateRRD( "$configuration->{'daemon'}->{'datastore'}/stat/empty.rrd", 'empty', 'GAUGE', 'U', 'U' );
