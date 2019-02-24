@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker-compose -f /settings/monerod.yml up
+docker-compose -f /settings/monerod.yml up -d
 
