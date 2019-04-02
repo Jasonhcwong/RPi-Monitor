@@ -318,9 +318,9 @@ sub new
     "/version.json",
     "/favicon.ico",
 
-    "/startservice",
-    "/stopservice",
-    "/deleteresync",
+    "/startmonerodwithouttor",
+    "/startmonerodwithtor",
+    "/stopmonerod",
 
     "/index.html",
     "/addons.html",
@@ -522,9 +522,9 @@ sub DoGET
   $path =~ /dynamic\.json/  and $this->SendStatus( $configuration ) and return;
   $path =~ /([^\/]+)\.json/ and $this->SendJSON($this->{$1}) and return;
 
-  $path =~ /startservice$/   and $this->RunCMD("/usr/src/app/start_monerod.sh") and return;
-  $path =~ /stopservice$/    and $this->RunCMD("/usr/src/app/stop_monerod.sh") and return;
-  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/delete_resync.sh") and return;
+  $path =~ /startmonerodwithouttor$/   and $this->RunCMD("/usr/src/app/start_monerod.sh false") and return;
+  $path =~ /startmonerodwithtor$/    and $this->RunCMD("/usr/src/app/start_monerod.sh true") and return;
+  $path =~ /stopmonerod$/    and $this->RunCMD("/usr/src/app/stop_monerod.sh") and return;
   $path =~ /shutdown$/       and $this->RunCMD("/usr/src/app/shutdown.sh") and return;
 
   #Recreate empty rrd on demand

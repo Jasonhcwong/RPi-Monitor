@@ -51,7 +51,7 @@ function startService(type, tor) {
 
 function stopMonerod() {
   disableAllButtons();
-  $.getJSON('stopservice', function(data) {
+  $.getJSON('stopmonerod', function(data) {
     if (data.return_code === '0') {
       alert('Service successfully stopped.\nPlease wait for 10 seconds and click the button below to refresh the page.');
       location.reload(true);
