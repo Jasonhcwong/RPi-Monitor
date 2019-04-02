@@ -2,30 +2,54 @@ var activePage = GetURLParameter('activePage');
 if (activePage == null){ activePage = 0; }
 
 function disableAllButtons() {
-  $("#startButton").prop('disabled',true);;
-  $("#stopButton").prop('disabled',true);;
-  $("#deleteResyncButton").prop('disabled',true);;
+  $("#stopMonerodButton").prop('disabled',true);;
+  $("#startMonerodWithoutTorButton").prop('disabled',true);;
+  $("#startMonerodWithTorButton").prop('disabled',true);;
   $("#shutdownButton").prop('disabled',true);;
 }
 
-function startService() {
+function startService(type, tor) {
   disableAllButtons();
-  $.getJSON('startservice', function(data) {
-    if (data.return_code === '0') {
-      alert('Service successfully started.\nPlease wait for 10 seconds and click the button below to refresh the page.');
-    } else {
-      alert('Failed to start service.');
-    }
-  })
-  .fail(function() {
-    alert('Failed to start service.');
-  })
-  .always(function() {
-    location.reload(true);
-  });
+  switch (type) {
+    case 'monero':
+      let method = 'startmonerodwithouttor';
+      if (tor == "true") {
+	method = 'startmonerodwithtor';
+      }
+
+      $.getJSON(method, function(data) {
+        if (data.return_code === '0') {
+          alert('Service successfully started.\nPlease wait for 10 seconds and click the button below to refresh the page.');
+        } else {
+          alert('Failed to start service.');
+        }
+      })
+      .fail(function() {
+        alert('Failed to start service.');
+      })
+      .always(function() {
+        location.reload(true);
+      });
+    break;
+
+    case 'litecoin':
+      alert('service NOT supported.');
+      location.reload(true);
+    break;
+
+    case 'bitcoin':
+      alert('service NOT supported.');
+      location.reload(true);
+    break;
+
+    default:
+      alert('service NOT supported.');
+      location.reload(true);
+  }
+
 }
 
-function stopService() {
+function stopMonerod() {
   disableAllButtons();
   $.getJSON('stopservice', function(data) {
     if (data.return_code === '0') {
@@ -41,28 +65,6 @@ function stopService() {
   .always(function() {
     location.reload(true);
   });
-}
-
-function deleteResync() {
-  var r = confirm('Are you sure you want to delete the blockchain data and resync from scratch?\nIt may take up to 24 hours!!');
-  if (r == true) {
-    disableAllButtons();
-    $.getJSON('deleteresync', function(data) {
-      if (data.return_code === '0') {
-        alert('blockchain deleted and resync started.\nPlease wait for 10 seconds and click the button below to refresh the page.');
-      } else {
-        alert('Failed to delete blockchain and resync.');
-      }
-    })
-    .fail(function() {
-      alert('Failed to delete blockchain and resync.');
-    })
-    .always(function() {
-      location.reload(true);
-    });
-  } else {
-    location.reload(true);
-  }
 }
 
 function shutdown() {
@@ -92,7 +94,9 @@ $(function () {
     // Concatenate dynamic.json and static.json into data variable
     $.extend(data, getData('static'));
     
-    tmp  = Badge(data.monerodActive, "!='2'", "Running", "success") + Badge(data.monerodActive, "=='2'", "Stopped", "danger");
-    $("#monerodActive").html(tmp)
+    monerodStatus  = Badge(data.monerodActive, "!='2'", "Running", "success") + Badge(data.monerodActive, "=='2'", "Stopped", "danger");
+    monerodTor  = Badge(data.monerodTor, "=='true'", "True", "success") + Badge(data.monerodTor, "!='true'", "False", "success");
+    $("#monerodActive").html(monerodStatus)
+    $("#monerodTor").html(monerodTor)
   })
 });

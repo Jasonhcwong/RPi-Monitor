@@ -5,9 +5,10 @@
   </div>
   <div class="panel-body">
     <b>Monero daemon status: </b> <div id="monerodActive"></div> <br>
-    <button type="button" onclick="startService()" id="startButton"><b>Start service</b></button> To start monero daemon<br><br>
-    <button type="button" onclick="stopService()" id="stopButton"><b>Stop service</b></button> To stop monero daemon<br><br>
-    <button type="button" onclick="deleteResync()" id="deleteResyncButton"><b><font color="red">Delete blockchain and restart syncing</font></b></button> This may take up to 24 hours to sync the blockchain<br><br>
+    <b>Monero daemon tor enabled: </b> <div id="monerodTor"></div> <br>
+    <button type="button" onclick="stopMonerod()" id="stopMonerodButton"><b>Stop service</b></button> To stop monero daemon<br><br>
+    <button type="button" onclick="startService('monero', 'false')" id="startMonerodWithoutTorButton"><b>Start service without Tor</b></button> To stop and then start monero daemon without Tor<br><br>
+    <button type="button" onclick="startService('monero', 'true')" id="startMonerodWithTorButton"><b>Start service with Tor</b></button> To stop and then start monero daemon with Tor<br><br>
   </div>
 </div>
 <div class="panel panel-default">
