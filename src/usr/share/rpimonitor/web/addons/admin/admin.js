@@ -6,6 +6,7 @@ function disableAllButtons() {
   $("#startMonerodWithoutTorButton").prop('disabled',true);;
   $("#startMonerodWithTorButton").prop('disabled',true);;
   $("#shutdownButton").prop('disabled',true);;
+  $("#deleteResync").prop('disabled',true);;
 }
 
 function startService(type, tor) {
@@ -54,6 +55,24 @@ function stopMonerod() {
   $.getJSON('stopmonerod', function(data) {
     if (data.return_code === '0') {
       alert('Service successfully stopped.\nPlease wait for 10 seconds and click the button below to refresh the page.');
+      location.reload(true);
+    } else {
+      alert('Failed to stop service.');
+    }
+  })
+  .fail(function() {
+    alert('Failed to stop service.');
+  })
+  .always(function() {
+    location.reload(true);
+  });
+}
+
+function deleteResync() {
+  disableAllButtons();
+  $.getJSON('stopmonerod', function(data) {
+    if (data.return_code === '0') {
+      alert('Delete and Resync successfully started.\nPlease wait for 10 seconds and click the button below to refresh the page.');
       location.reload(true);
     } else {
       alert('Failed to stop service.');

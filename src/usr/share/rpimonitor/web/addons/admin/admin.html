@@ -1,7 +1,7 @@
 <br>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">monero daemon administration</h3>
+    <h3 class="panel-title">monero daemon administration(Please wait for about 20 seconds after clicking any button below)</h3>
   </div>
   <div class="panel-body">
     <b>Monero daemon status: </b> <div id="monerodActive"></div> <br>
@@ -9,6 +9,7 @@
     <button type="button" onclick="stopMonerod()" id="stopMonerodButton"><b>Stop service</b></button> To stop monero daemon<br><br>
     <button type="button" onclick="startService('monero', 'false')" id="startMonerodWithoutTorButton"><b>Start service without Tor</b></button> To stop and then start monero daemon without Tor.<br><br>
     <button type="button" onclick="startService('monero', 'true')" id="startMonerodWithTorButton"><b>Start service with Tor</b></button> To stop and then start monero daemon with Tor. <font color="red">Use only after blockchain is 100% synced.</font><br><br>
+    <button type="button" onclick="deleteResync()" id="deleteResyncButton"><b>Delete and Resync blockchain</b></button> To delete blockchain database and restart syncing from scratch. <font color="red">Use only when blockchain is stuck for more than 1 day.</font><br><br>
   </div>
 </div>
 <div class="panel panel-default">
