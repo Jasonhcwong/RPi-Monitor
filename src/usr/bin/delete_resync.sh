@@ -1,8 +1,8 @@
 #!/bin/bash
 
-./stop_monerod.sh
+/usr/src/app/stop_monerod.sh
 
 rm -rf /data/monero/lmdb/*
 
-./start_monerod.sh
+/usr/src/app/start_monerod.sh
 
