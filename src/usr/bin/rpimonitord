@@ -526,7 +526,7 @@ sub DoGET
   $path =~ /startmonerodwithouttor$/   and $this->RunCMD("/usr/src/app/start_monerod.sh false") and return;
   $path =~ /startmonerodwithtor$/    and $this->RunCMD("/usr/src/app/start_monerod.sh true") and return;
   $path =~ /stopmonerod$/    and $this->RunCMD("/usr/src/app/stop_monerod.sh") and return;
-  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/stop_monerod.sh && rm -rf /data/monero/lmdb/* && /usr/src/app/start_monerod.sh false") and return;
+  $path =~ /deleteresync$/   and $this->RunCMD("/usr/src/app/delete_resync.sh") and return;
   $path =~ /shutdown$/       and $this->RunCMD("/usr/src/app/shutdown.sh") and return;
 
   #Recreate empty rrd on demand
